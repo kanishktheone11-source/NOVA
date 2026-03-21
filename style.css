@@ -54,20 +54,24 @@
     }
 
     /* Floating Particles */
-    .particle {
-      position: absolute;
-      background: var(--color-accent);
-      border-radius: 50%;
-      filter: blur(1px);
-      animation: float linear infinite;
-    }
+    /* Regolith Dust Storm */
+.particle {
+  position: absolute;
+  /* Lunar dust colors: grey mixed with slight orange from the lasers */
+  background: #8b8b99; 
+  border-radius: 50%;
+  filter: blur(2px);
+  z-index: 1;
+  animation: regolithStorm linear infinite;
+}
 
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-    }
+/* Blows diagonally across the screen, shrinking as it moves away */
+@keyframes regolithStorm {
+  0% { transform: translate(100vw, 10vh) scale(1.5); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translate(-50vw, -20vh) scale(0.2); opacity: 0; }
+}
 
     /* Navigation */
     .navbar {
@@ -103,15 +107,29 @@
     }
 
     .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-    }
+  width: 40px;
+  height: 40px;
+  /* Dark space background for the box */
+  background: #070709; 
+  /* Laser orange border */
+  border: 1px solid var(--color-primary); 
+  /* Outer glow and inner reflection */
+  box-shadow: 0 0 15px rgba(255, 87, 34, 0.4), inset 0 0 10px rgba(255, 152, 0, 0.2);
+  /* Sharper edges look more 'engineered' */
+  border-radius: 8px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Makes the SVG stroke color glow */
+  color: var(--color-accent); 
+  transition: all 0.3s ease;
+}
+
+/* Optional: Make the logo pulse slightly when you hover over it */
+.logo:hover .logo-icon {
+  box-shadow: 0 0 25px rgba(255, 87, 34, 0.7), inset 0 0 15px rgba(255, 152, 0, 0.4);
+  transform: scale(1.05);
+}
 
     .nav-links {
       display: flex;
@@ -345,6 +363,33 @@
       color: var(--color-text-muted);
       margin-top: 0.25rem;
     }
+    /* The Looming Moon */
+.lunar-moon {
+  position: absolute;
+  top: 10%;
+  right: -5%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 700px;
+  max-height: 700px;
+  border-radius: 50%;
+  /* Creates a 3D sphere effect using crater-like colors */
+  background: radial-gradient(circle at 30% 30%, #4a4a5a, #1a1a24 60%, #050510 100%);
+  /* Inset shadow creates depth, outer shadows create a laser-orange atmospheric glow */
+  box-shadow:
+    inset -30px -30px 60px rgba(0,0,0,0.9),
+    0 0 120px rgba(255, 152, 0, 0.15), 
+    0 0 250px rgba(255, 255, 255, 0.05);
+  z-index: 0;
+  opacity: 0.85;
+  animation: orbitMoon 30s ease-in-out infinite;
+}
+
+/* Make the moon breathe slightly */
+@keyframes orbitMoon {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
 
     /* Glassmorphism Cards Section */
     .section {

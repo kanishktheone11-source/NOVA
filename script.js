@@ -16,14 +16,29 @@
       }
 
       // Create floating particles
-      for (let i = 0; i < 20; i++) {
+      // Create high-speed Regolith Dust Storm
+      for (let i = 0; i < 120; i++) { // Increased from 20 to 120 particles
         const particle = document.createElement('div');
         particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.width = Math.random() * 3 + 1 + 'px';
+        
+        // Start them mostly on the right side of the screen
+        particle.style.left = Math.random() * 100 + 50 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        // Vary the size of the dust grains
+        particle.style.width = Math.random() * 5 + 1 + 'px';
         particle.style.height = particle.style.width;
-        particle.style.animationDuration = Math.random() * 15 + 10 + 's';
-        particle.style.animationDelay = Math.random() * 10 + 's';
+        
+        // Faster animation: 2 to 7 seconds instead of 10 to 25
+        particle.style.animationDuration = Math.random() * 5 + 2 + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        // Occasionally make a dust particle glowing orange
+        if (Math.random() > 0.8) {
+            particle.style.background = '#ff9800';
+            particle.style.boxShadow = '0 0 10px #ff9800';
+        }
+        
         container.appendChild(particle);
       }
     }
@@ -115,6 +130,24 @@
       animateStats();
       setupSmoothScroll();
       setupCardEffects();
-      
+      typeWriterEffect();
+
       window.addEventListener('scroll', handleScroll);
     });
+    // High-tech terminal typing effect
+function typeWriterEffect() {
+  const subtitle = document.querySelector('.hero-subtitle');
+  const text = subtitle.textContent.trim(); // Get the current text
+  subtitle.textContent = ''; // Clear it out instantly
+  
+  let i = 0;
+  // Type a letter every 30 milliseconds
+  const typing = setInterval(() => {
+    if (i < text.length) {
+      subtitle.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(typing); // Stop when done
+    }
+  }, 30);
+}
